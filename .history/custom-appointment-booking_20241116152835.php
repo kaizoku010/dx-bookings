@@ -2,7 +2,7 @@
 /*
 Plugin Name: DX Bookings
 Description: Allows users to book appointments, pay through WooCommerce, and access reports.
-Version: 7.0   
+Version: 6.5   
 Author: Muneza
 Text Domain: dx-bookings
 */

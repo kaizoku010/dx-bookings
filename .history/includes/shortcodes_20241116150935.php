@@ -27,7 +27,7 @@ function render_dx_appointment_form() {
         <!-- Call the function to display the prices -->
         <?php display_appointment_prices(); ?>
 
-        <button class="dx-appointment-btn" type="submit" id="schedule-appointment-btn">Schedule Appointment</button>
+        <button class="" type="submit" id="schedule-appointment-btn">Schedule Appointment</button>
    
     </form>
     <script>

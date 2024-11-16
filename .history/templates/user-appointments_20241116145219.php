@@ -18,7 +18,7 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
 <div class="dx-appointments-container">
     <!-- Appointments List -->
     <div class="appointments-list">
-        <h3 class="your-appointments-title">Your Appointments</h3>
+        <h3 class="your-appointment-title">Your Appointments</h3>
         <?php if (!empty($appointments)) : ?>
             <?php foreach ($appointments as $appointment) : ?>
                 <div class="appointment-item">

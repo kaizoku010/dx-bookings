@@ -18,7 +18,7 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
 <div class="dx-appointments-container">
     <!-- Appointments List -->
     <div class="appointments-list">
-        <h3 class="your-appointments-title">Your Appointments</h3>
+        <h3>Your Appointments</h3>
         <?php if (!empty($appointments)) : ?>
             <?php foreach ($appointments as $appointment) : ?>
                 <div class="appointment-item">
@@ -41,7 +41,7 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
 
     <!-- Appointment Booking Form -->
     <div class="appointments-form">
-        <h3 class="new-booking-title">Book a New Appointment</h3>
+        <h3>Book a New Appointment</h3>
         <?php echo do_shortcode('[dx_appointment_form]'); ?>
     </div>
 </div>

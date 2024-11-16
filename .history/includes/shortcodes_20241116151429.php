@@ -109,5 +109,5 @@ function display_user_appointments() {
 
     return ob_get_clean();
 }
-add_shortcode('display_user_appointments', 'display_user_appointments');
+// add_shortcode('display_user_appointments', 'display_user_appointments');
 ?>
