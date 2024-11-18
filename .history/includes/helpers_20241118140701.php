@@ -184,7 +184,7 @@ function dx_bookings_admin_add_appointment() {
         <label for="appointment_date">Appointment Date:</label>
         <input type="date" name="appointment_date" id="appointment_date" required><br>
 
-        <label for="appointment_price">Price (£):</label>
+        <label for="appointment_price">Price ($):</label>
         <input type="number" step="0.01" name="appointment_price" id="appointment_price" required><br>
 
         <label for="appointment_notes">Notes:</label>

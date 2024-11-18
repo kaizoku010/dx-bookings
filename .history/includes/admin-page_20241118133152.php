@@ -58,7 +58,7 @@ function dx_bookings_admin_page() {
 
     ?>
     <div class="wrap">
-        <h1>DX Bookings Admin Page Version: ~83.1.1</h1>
+        <h1>DX Bookings Admin Page Version: ~80.0.0</h1>
         <p>Plugin by muneza dixon@2024</p>
         <p>Manage all appointments here.</p>
 
@@ -97,7 +97,7 @@ function dx_bookings_admin_page() {
                 </td>
                 <td>
                     <!-- Document Upload Form -->
-                    <form class="dx-appointment-form" method="POST" enctype="multipart/form-data">
+                    <form id method="POST" enctype="multipart/form-data">
                         <input title=" "  class="dx-file-upload" type="file" name="uploaded_document" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
                         <input type="hidden" name="appointment_id" value="<?php echo esc_attr($appointment->id); ?>">
                         <button type="submit" name="upload_document" class="button" id="upload_document_button">Save</button>

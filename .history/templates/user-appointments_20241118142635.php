@@ -105,8 +105,6 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
 
 </style>
 
-
-<!-- download btn and progress bar oba -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var openBtn = document.getElementById('openAppointmentForm');

@@ -1,7 +1,7 @@
 #appointment-form {
     display: flex;
     flex-direction: column;
-    max-width: 100%;
+    max-width: 400px;
 }
 
 #appointment-form label {
@@ -19,7 +19,6 @@
 }
 
 
-
 .your-appointments-title{
     font-size: 1.5rem !important; 
 
@@ -32,6 +31,7 @@
     text-align: inherit;
     border: none;
     text-align: center;
+    border-radius: 30px;
     height: 4rem;
     cursor: pointer;
 }
@@ -172,13 +172,7 @@
 }
 
 #download_report_btn{
-    background-color: #88b44e;
     margin-top: 2rem;
-}
-
-#download_report_btn:hover{
-    color: white !important;
-    background-color: #155724 !important;
 }
 
 #delete-appointment-btn{
@@ -194,7 +188,7 @@
   .wp-admin input[type=file] {
     padding: 3px 0;
     cursor: pointer;
-    color: transparent !important;
+    color: transparent;
 }
 
 
@@ -205,17 +199,10 @@
 .closeAppointmentForm{
 
 }
-
 #openAppointmentForm{
+background-color: #88b44e;
 color: white;
+/* padding: 10px 20px; */
 text-decoration: none;
 border-radius: 4px;
 cursor: pointer;
-height: 3%;
-
-}
-
-
-.dx-appointment-form{
-    margin-bottom: 0.2rem !important;
-}

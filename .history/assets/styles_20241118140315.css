@@ -18,7 +18,9 @@
     font-size: 1.5rem !important; 
 }
 
-
+.dx-appointment-form{
+    margin-bottom: 0.2rem !important;
+}
 
 .your-appointments-title{
     font-size: 1.5rem !important; 
@@ -176,10 +178,7 @@
     margin-top: 2rem;
 }
 
-#download_report_btn:hover{
-    color: white !important;
-    background-color: #155724 !important;
-}
+#download_report_btn
 
 #delete-appointment-btn{
     margin-top: -.6rem !important;
@@ -213,9 +212,4 @@ border-radius: 4px;
 cursor: pointer;
 height: 3%;
 
-}
-
-
-.dx-appointment-form{
-    margin-bottom: 0.2rem !important;
 }

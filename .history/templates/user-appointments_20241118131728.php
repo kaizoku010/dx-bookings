@@ -27,11 +27,9 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
                     <p class="found-data-title"><strong>Status:</strong> <?php echo esc_html(ucfirst($appointment->cab_status)); ?></p>
                     <?php if (!empty($appointment->cab_document_url)) : ?>
                         <p>
-                            <a href="<?php echo esc_url($appointment->cab_document_url); ?>" class="btn btn-primary" id="download_report_btn" download onclick="handleDownload(event)">
+                            <a href="<?php echo esc_url($appointment->cab_document_url); ?>" class="btn btn-primary" id="download report" download>
                                 Download Report
                             </a>
-                            <div id="download-status" style="display: none;">Downloading... Please wait...</div>
-                            <div id="download-failed" style="display: none; color: red;">Download failed. Please try again.</div>
                         </p>
                     <?php endif; ?>
                 </div>
@@ -42,18 +40,19 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
     </div>
 
     <!-- Button to Trigger Appointment Booking Form Modal -->
-    <button id="openAppointmentForm" class="btn btn-primary">Book A New Appointment</button>
+    <button id="openAppointmentForm" class="btn btn-primary">Book a New Appointment</button>
 
     <!-- Appointment Booking Form Modal -->
     <div id="appointmentFormModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" id="closeAppointmentForm">&times;</span>
-            <h3 class="new-booking-title">Appointment Form</h3>
+            <h3 class="new-booking-title">Book a New Appointment</h3>
             <?php echo do_shortcode('[dx_appointment_form]'); ?>
         </div>
     </div>
 </div>
 
+<!-- CSS for Modal -->
 <style>
     .modal {
         display: none;
@@ -99,14 +98,12 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
         cursor: pointer;
     }
 
-    #download-status, #download-failed {
-        margin-top: 10px;
+    .btn:hover {
+        background-color: #005a87;
     }
-
 </style>
 
-
-<!-- download btn and progress bar oba -->
+<!-- JavaScript for Modal -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var openBtn = document.getElementById('openAppointmentForm');
@@ -130,37 +127,4 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
             }
         });
     });
-
-    function handleDownload(event) {
-        event.preventDefault(); // Prevent the default download behavior
-
-        var downloadButton = event.target;
-        var downloadStatus = document.getElementById('download-status');
-        var downloadFailed = document.getElementById('download-failed');
-
-        // Disable the button to prevent further clicks
-        downloadButton.disabled = true;
-        downloadStatus.style.display = 'block';
-
-        // Attempt to initiate the download
-        var link = downloadButton.getAttribute('href');
-
-        // Simulate file download with a setTimeout (you can replace this with actual download logic)
-        setTimeout(function () {
-            // Simulate success or failure (for demo purposes)
-            var isSuccess = Math.random() > 0.2; // 80% chance of success
-
-            if (isSuccess) {
-                // File download simulated as successful
-                window.location.href = link; // Trigger actual download
-            } else {
-                // Show failure message
-                downloadFailed.style.display = 'block';
-                downloadStatus.style.display = 'none';
-            }
-
-            // Re-enable the button after a delay (in case of failure)
-            downloadButton.disabled = false;
-        }, 2000); // Simulate a delay before finishing the download
-    }
 </script>
