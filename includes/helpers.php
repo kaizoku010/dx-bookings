@@ -1,8 +1,7 @@
 <?php
 function cab_get_product_id_by_appointment_type($appointment_type) {
     $product_map = [
-        'standard' => 4650,
-        'extended' => 4649,
+        'free' => 4650,
         'premium'  => 4651,
     ];
     return $product_map[$appointment_type] ?? null;
@@ -54,24 +53,31 @@ add_action('init', 'dx_handle_booking_submission');
 
 function get_user_appointments($user_id) {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'appointments';
-    $query = $wpdb->prepare("SELECT * FROM $table_name WHERE user_id = %d ORDER BY date DESC", $user_id);
-    return $wpdb->get_results($query);
-}
+    $table_name = $wpdb->base_prefix . 'cab_appointments';
 
+    $query = $wpdb->prepare("
+        SELECT * FROM $table_name
+        WHERE cab_user_id = %d
+        ORDER BY cab_date DESC
+    ", $user_id);
+        return $wpdb->get_results($query);
+}
 
 
 function dx_finalize_booking($order_id) {
     if (!$order_id) {
+        error_log('Order ID is missing in dx_finalize_booking.');
         return;
     }
 
     $order = wc_get_order($order_id);
-
-    // Get appointment data from session
+    $user_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+    $user_email = $order->get_billing_email();
+    $user_phone = $order->get_billing_phone();
     $appointment_data = WC()->session->get('dx_booking_data');
 
     if (!$appointment_data) {
+        error_log('No appointment data in session.');
         return;
     }
 
@@ -83,28 +89,37 @@ function dx_finalize_booking($order_id) {
     $product = wc_get_product($product_id);
     $price = $product ? $product->get_price() : 0;
 
-    // Save booking to database, including price
-    $wpdb->insert($table_name, [
+    // Insert booking details including name, email, phone, and notes
+    $result = $wpdb->insert($table_name, [
         'cab_user_id'           => $appointment_data['user_id'],
+        'cab_user_name'         => $user_name,
+        'cab_user_email'        => $user_email,
+        'cab_user_phone'        => $user_phone,
         'cab_appointment_type'  => $appointment_data['appointment_type'],
         'cab_date'              => $appointment_data['date'],
-        'cab_duration'          => 60, // Default duration in minutes
-        'cab_status'            => 'paid',
-        'cab_price'             => $price,  // Save the price
+        'cab_duration'          => 60, // Default duration
+        'cab_price'             => $price,
         'cab_notes'             => $appointment_data['notes'],
+        'cab_status'            => 'pending_payment',
         'cab_document_url'      => null,
     ]);
 
-    // Clear session data
+    if ($result === false) {
+        error_log('Database insertion failed: ' . $wpdb->last_error);
+    } else {
+        error_log('Appointment successfully added to database for order ID: ' . $order_id);
+    }
+
     WC()->session->__unset('dx_booking_data');
 }
-add_action('woocommerce_thankyou', 'dx_finalize_booking');
+
+add_action('woocommerce_thankyou', 'dx_finalize_booking', 10, 1);
 
 function dx_finalize_booking_redirect($order_id) {
     $user_id = get_current_user_id();
     if ($user_id) {
         // Redirect to Appointments page with success message
-        $redirect_url = wc_get_account_endpoint_url('appointments') . '?booking_success=1';
+        $redirect_url = wc_get_account_endpoint_url('dx-appointments') . '?booking_success=1';
         wp_redirect($redirect_url);
         exit;
     }
@@ -115,8 +130,7 @@ add_action('woocommerce_thankyou', 'dx_finalize_booking_redirect');
 function display_appointment_prices() {
     // Get product IDs (update with actual product ID)
     $product_ids = [
-        'standard' => 4650,
-        'extended' => 4649,
+        'free' => 4650,
         'premium'  => 4651,
     ];
 
@@ -130,9 +144,8 @@ function display_appointment_prices() {
     }
 
     // Display prices (you can adjust how and where you display them)
-    echo '<p>Standard Appointment Price: $' . esc_html($prices['standard']) . '</p>';
-    echo '<p>Extended Appointment Price: $' . esc_html($prices['extended']) . '</p>';
-    echo '<p>Premium Appointment Price: $' . esc_html($prices['premium']) . '</p>';
+    echo '<p>10 Minute Free Appointment Price: $' . esc_html($prices['free']) . '</p>';
+    echo '<p>30 Minute Premium Appointment Price: $' . esc_html($prices['premium']) . '</p>';
 }
 
 function dx_bookings_admin_add_appointment() {
@@ -143,7 +156,7 @@ function dx_bookings_admin_add_appointment() {
         $appointment_notes = sanitize_textarea_field($_POST['appointment_notes']);
         
         global $wpdb;
-        $table_name = $wpdb->prefix . 'cab_appointments';
+        $table_name = $wpdb->base_prefix . 'cab_appointments';
 
         // Insert the new appointment into the database
         $wpdb->insert(
@@ -164,9 +177,8 @@ function dx_bookings_admin_add_appointment() {
     <form method="POST">
         <label for="appointment_type">Appointment Type:</label>
         <select name="appointment_type" id="appointment_type" required>
-            <option value="standard">Standard</option>
-            <option value="extended">Extended</option>
-            <option value="premium">Premium</option>
+            <option value="free">Free 10 Miunte Appointment</option>
+            <option value="premium">Premium 30 Miunte Appointment</option>
         </select><br>
 
         <label for="appointment_date">Appointment Date:</label>
@@ -182,6 +194,18 @@ function dx_bookings_admin_add_appointment() {
     </form>
     <?php
 }
+
+// add_action('woocommerce_add_to_cart', 'save_appointment_notes_to_session', 10, 6);
+// function save_appointment_notes_to_session($cart_item_key, $product_id, $quantity, $variation_id, $variations, $cart_item_data) {
+//     if (isset($_POST['appointment_notes'])) {
+//         // Store appointment notes in the WooCommerce session
+//         WC()->session->set('dx_booking_data', [
+//             'notes' => sanitize_textarea_field($_POST['appointment_notes'])
+//         ]);
+//     }
+// }
+
+
 
 
 ?>

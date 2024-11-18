@@ -1,9 +1,8 @@
 <?php
 function dx_get_user_appointments($user_id) {
    global $wpdb;
-    $table_name = $wpdb->prefix . 'cab_appointments';  // Ensure the correct table is used
+    $table_name = $wpdb->prefix . 'cab_appointments';
 
-    // Modify the query to get only paid appointments
     $query = $wpdb->prepare("
         SELECT * 
         FROM $table_name 

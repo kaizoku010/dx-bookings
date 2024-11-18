@@ -14,14 +14,47 @@
     margin-top: 5px;
 }
 
+.new-booking-title{
+    font-size: 1.5rem !important; 
+}
+
+
+.your-appointments-title{
+    font-size: 1.5rem !important; 
+
+}
+
 #appointment-form button {
-    margin-top: 15px;
     padding: 10px;
     background-color: #4CAF50;
     color: #fff;
+    text-align: inherit;
     border: none;
+    text-align: center;
+    border-radius: 30px;
+    height: 4rem;
     cursor: pointer;
 }
+
+
+.found-data-title{
+    margin-bottom: 0rem;
+}
+
+#appointment-form button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-align: inherit;
+    margin-top: 5% !important;
+    border: none;
+    text-align: center;
+    border-radius: 30px;
+    height: 4rem;
+    cursor: pointer;
+}
+
+
 
 
 /* Add to your styles.css or in the page header */
@@ -30,11 +63,14 @@
     background-color: #f3f3f3;
     border-radius: 5px;
     display: none;
+    height: 10px;
+
 }
 
 #progress-bar div {
     width: 0;
-    height: 30px;
+    margin-bottom: 2rem;
+    height: 10px;
     background-color: #4caf50;
     border-radius: 5px;
 }
@@ -95,3 +131,58 @@
     border-radius: 4px;
 }
 
+@media (min-width: 555px) {
+ 
+
+    .appointments-list {
+        flex: 1;
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 100%;
+    }
+
+    .appointments-form {
+        flex: 1;
+        background: #fff;
+        padding: 20px;
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #appointment-form input, #appointment-form textarea {
+        padding: 5px;
+        margin-top: 5px;
+        margin-bottom: 1rem !important;
+    }
+}
+
+
+.document_upload_div{
+
+}
+
+
+#upload_document_button{
+    margin-top: .2rem !important;
+    width: 5rem;
+
+}
+
+#delete-appointment-btn{
+    margin-top: -.6rem !important;
+}
+
+
+.dx-file-upload[type='file'] {
+    color: transparent;
+  }
+
+
+  .wp-admin input[type=file] {
+    padding: 3px 0;
+    cursor: pointer;
+    color: transparent;
+}

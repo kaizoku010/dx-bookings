@@ -1,7 +1,7 @@
 <?php
 function cab_create_appointments_table() {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'cab_appointments'; // Namespaced table name
+    $table_name = $wpdb->prefix . 'cab_appointments';
 
     if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
         $charset_collate = $wpdb->get_charset_collate();
@@ -12,9 +12,15 @@ function cab_create_appointments_table() {
             cab_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
             cab_duration int NOT NULL,
             cab_status varchar(50) DEFAULT 'unpaid' NOT NULL,
+            cab_price decimal(10,2) DEFAULT 0.00,
+            cab_notes text DEFAULT NULL,
+            cab_user_name varchar(100) DEFAULT NULL,
+            cab_user_email varchar(100) DEFAULT NULL,
+            cab_user_phone varchar(20) DEFAULT NULL,
             cab_document_url text DEFAULT NULL,
             PRIMARY KEY  (cab_id)
         ) $charset_collate;";
+        
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
     }
@@ -41,22 +47,33 @@ function cab_run_upgrade_routine() {
     cab_create_appointments_table();
 }
 
-// Function to add extra fields to the appointments table (run once)
 function dx_bookings_add_extra_fields() {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'cab_appointments';
-    
-    // Check if the 'price' column already exists
-    $column_exists = $wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_price'");
-    
-    if (empty($column_exists)) {
-        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_price DECIMAL(10,2) NOT NULL DEFAULT 0.00");
+    $table_name = $wpdb->base_prefix . 'cab_appointments';
+
+    // Add 'cab_user_name' if it doesn't exist
+    if (!$wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_user_name'")) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_user_name VARCHAR(100) DEFAULT NULL");
     }
-    
-    // Add any additional fields as needed (for example, 'cab_notes')
-    $column_exists = $wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_notes'");
-    if (empty($column_exists)) {
-        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_notes TEXT");
+
+    // Add 'cab_user_email' if it doesn't exist
+    if (!$wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_user_email'")) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_user_email VARCHAR(100) DEFAULT NULL");
+    }
+
+    // Add 'cab_user_phone' if it doesn't exist
+    if (!$wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_user_phone'")) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_user_phone VARCHAR(20) DEFAULT NULL");
+    }
+
+    // Add 'cab_price' if it doesn't exist
+    if (!$wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_price'")) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_price DECIMAL(10,2) DEFAULT 0.00");
+    }
+
+    // Add 'cab_notes' if it doesn't exist
+    if (!$wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_notes'")) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_notes TEXT DEFAULT NULL");
     }
 }
 add_action('plugins_loaded', 'dx_bookings_add_extra_fields');

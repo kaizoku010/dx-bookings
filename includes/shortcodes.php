@@ -5,14 +5,11 @@ function render_dx_appointment_form() {
     ob_start();
     ?>
     <form id="appointment-form" method="POST">
-    <div id="progress-bar" style="display:none; width: 100%; background: #f3f3f3; border: 1px solid #ccc;">
-    <div style="height: 20px; background: #4caf50; width: 0%;"></div>
-</div>
+
     <label for="appointment_type">Type:</label>
         <select name="appointment_type" id="appointment_type" required>
-            <option value="standard">Standard</option>
-            <option value="extended">Extended</option>
-            <option value="premium">Premium</option>
+        <option value="free">Free 10 Miunte Appointment</option>
+        <option value="premium">Premium 30 Miunte Appointment</option>
         </select>
 
         <label for="appointment_date">Date:</label>
@@ -26,7 +23,9 @@ function render_dx_appointment_form() {
 
         <!-- Call the function to display the prices -->
         <?php display_appointment_prices(); ?>
-
+        <div id="progress-bar" style="display:none; width: 100%; background: #f3f3f3; border: 1px solid #ccc;">
+    <div style="height: 10px; background: #4caf50; width: 0%;"></div>
+</div>
         <button class="dx-appointment-btn" type="submit" id="schedule-appointment-btn">Schedule Appointment</button>
    
     </form>
@@ -35,9 +34,8 @@ function render_dx_appointment_form() {
 
 function getProductID(appointmentType) {
     const productMap = {
-        standard:4650, // ID for Standard Appointment
-        extended:4649, // ID for Extended Appointment
-        premium: 4651,  // ID for Premium Appointment
+        free:4650, 
+        premium:4651, 
     };
     return productMap[appointmentType] || null;
 }
@@ -66,7 +64,9 @@ jQuery(document).ready(function($) {
             method: 'POST',
             data: {
                 product_id: getProductID(appointmentType),
-                quantity: 1
+                quantity: 1,
+                appointment_notes: appointmentNotes,
+
             },
             success: function(response) {
                 window.location.href = '/cart';
@@ -89,11 +89,10 @@ add_shortcode('dx_appointment_form', 'render_dx_appointment_form');
 
 function display_user_appointments() {
     $user_id = get_current_user_id();
-    $appointments = get_user_appointments($user_id);  // Fetch only paid appointments
-
+    $appointments = get_user_appointments($user_id); 
     ob_start();
     if (!empty($appointments)) {
-        echo '<h3>Your Paid Appointments</h3>';
+        echo '<h3>Your Appointments</h3>';
         foreach ($appointments as $appointment) {
             echo '<p>Appointment Date: ' . esc_html($appointment->cab_date) . '</p>';
             echo '<p>Time: ' . esc_html($appointment->cab_time) . '</p>';
@@ -104,10 +103,14 @@ function display_user_appointments() {
             }
         }
     } else {
-        echo '<p>No paid appointments found.</p>';
+        echo '<p>No appointments booked yet.</p>';
     }
 
     return ob_get_clean();
 }
 add_shortcode('display_user_appointments', 'display_user_appointments');
+
+
+
+
 ?>
