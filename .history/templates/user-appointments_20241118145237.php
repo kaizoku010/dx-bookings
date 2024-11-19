@@ -144,22 +144,6 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
 
         // Attempt to initiate the download
         var link = downloadButton.getAttribute('href');
-   
-        //a temporary <a> element to trigger the download
-    var a = document.createElement('a');
-    a.href = link;
-    a.download = link.substring(link.lastIndexOf('/') + 1); // Extract filename from URL
-    a.style.display = 'none'; // Hide the <a> element
-
-    // Append the <a> to the body to initiate the download
-    document.body.appendChild(a);
-
-    // Trigger a click event on the <a> to start the download
-    a.click();
-
-    // Remove the <a> element after download
-    document.body.removeChild(a);
-
 
         // Simulate file download with a setTimeout (you can replace this with actual download logic)
         setTimeout(function () {
@@ -177,6 +161,7 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
                 downloadStatus.style.display = 'none';
             }
 
+            // Re-enable the button after a delay (in case of failure)
             downloadButton.disabled = false;
         }, 2000); // Simulate a delay before finishing the download
     }

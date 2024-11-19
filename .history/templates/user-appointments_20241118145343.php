@@ -144,8 +144,7 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
 
         // Attempt to initiate the download
         var link = downloadButton.getAttribute('href');
-   
-        //a temporary <a> element to trigger the download
+          // Create a temporary <a> element to trigger the download
     var a = document.createElement('a');
     a.href = link;
     a.download = link.substring(link.lastIndexOf('/') + 1); // Extract filename from URL
@@ -177,6 +176,7 @@ if (isset($_GET['appointment_booked']) && $_GET['appointment_booked'] == 'true')
                 downloadStatus.style.display = 'none';
             }
 
+            // Re-enable the button after a delay (in case of failure)
             downloadButton.disabled = false;
         }, 2000); // Simulate a delay before finishing the download
     }

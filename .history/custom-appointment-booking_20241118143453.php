@@ -2,7 +2,7 @@
 /*
 Plugin Name: DX Bookings
 Description: Allows users to book appointments, pay through WooCommerce, and access reports.
-Version: 91.1.1   
+Version: 84.1.1   
 Author: Muneza
 Text Domain: dx-bookings-wordpress
 */
@@ -44,7 +44,7 @@ function dx_bookings_tab_content() {
     // Include the user appointments template
     include plugin_dir_path(__FILE__) . 'templates/user-appointments.php';
 
-    // Display the booking form
+    // // Display the booking form
     // echo do_shortcode('[dx_appointment_form]');
 }
 
