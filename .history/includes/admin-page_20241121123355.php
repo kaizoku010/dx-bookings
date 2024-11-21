@@ -58,7 +58,7 @@ function dx_bookings_admin_page() {
 
     ?>
     <div class="wrap">
-        <h1>DX Bookings Admin Page Version: ~ 12</h1>
+        <h1>DX Bookings Admin Page Version: ~ 10</h1>
         <p>Plugin by muneza dixon@2024</p>
         <p>Manage all appointments here.</p>
 

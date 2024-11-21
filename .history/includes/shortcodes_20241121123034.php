@@ -76,8 +76,6 @@ jQuery(document).ready(function($) {
             },
             complete: function() {
                 $('#progress-bar').hide();
-                $('#progress-bar div').css('width', '0%'); // Reset progress bar
-
             }
         });
     });
@@ -99,7 +97,7 @@ function display_user_appointments() {
             echo '<p>Appointment Date: ' . esc_html($appointment->cab_date) . '</p>';
             echo '<p>Time: ' . esc_html($appointment->cab_time) . '</p>';
             echo '<p>Status: ' . esc_html($appointment->cab_status) . '</p>';
-            // echo '<p>Notes: ' . esc_html($appointment->cab_notes) . '</p>';
+            echo '<p>Notes: ' . esc_html($appointment->cab_notes) . '</p>';
             if (!empty($appointment->cab_document_url)) {
                 echo '<a href="' . esc_url($appointment->cab_document_url) . '">Download Report</a>';
             }

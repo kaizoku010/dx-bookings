@@ -137,6 +137,7 @@ function sync_order_to_appointments($order_id) {
 // function dx_bookings_admin_scripts() {
 //     wp_enqueue_media(); // Enqueue WordPress media uploader scripts
 
+
 //     <script type="text/javascript">
 //         jQuery(document).ready(function($){
 //             $('#upload_document_button').click(function(e) {

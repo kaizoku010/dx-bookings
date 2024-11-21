@@ -134,34 +134,5 @@ function sync_order_to_appointments($order_id) {
     }
 }
 
-// function dx_bookings_admin_scripts() {
-//     wp_enqueue_media(); // Enqueue WordPress media uploader scripts
-
-//     <script type="text/javascript">
-//         jQuery(document).ready(function($){
-//             $('#upload_document_button').click(function(e) {
-//                 e.preventDefault();
-
-//                 var mediaUploader = wp.media({
-//                     title: 'Select Document',
-//                     button: {
-//                         text: 'Use this file'
-//                     },
-//                     multiple: false
-//                 });
-
-//                 mediaUploader.open();
-
-//                 mediaUploader.on('select', function() {
-//                     var attachment = mediaUploader.state().get('selection').first().toJSON();
-//                     $('#appointment_document_url').val(attachment.url); // Store the URL in the text field
-//                 });
-//             });
-//         });
-//     </script>
-//     <?php
-// }
-// add_action('admin_enqueue_scripts', 'dx_bookings_admin_scripts');
-
 
 ?>

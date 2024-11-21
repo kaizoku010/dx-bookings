@@ -2,7 +2,7 @@
 /*
 Plugin Name: DX Bookings
 Description: Allows users to book appointments, pay through WooCommerce, and access reports.
-Version: 12   
+Version: 91.1.1   
 Author: Muneza
 Text Domain: dx-bookings-wordpress
 */
@@ -83,8 +83,8 @@ function sync_order_to_appointments($order_id) {
     $user_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
     $user_email = $order->get_billing_email();
     $user_phone = $order->get_billing_phone();
-    // $appointment_data = WC()->session->get('dx_booking_data');
-    // $appointment_notes = isset($appointment_data['notes']) ? $appointment_data['notes'] : '';
+    $appointment_data = WC()->session->get('dx_booking_data');
+    $appointment_notes = isset($appointment_data['notes']) ? $appointment_data['notes'] : '';
 
 
     if (!$order) {
@@ -116,7 +116,7 @@ function sync_order_to_appointments($order_id) {
                 'cab_date' => current_time('mysql'), // Use actual data if available
                 'cab_status'=> 'paid',
                 'cab_price' => $item->get_total(),
-                // 'cab_notes' => $appointment_notes,
+                'cab_notes' => $appointment_notes,
                 'cab_user_name' => $user_name,
                 'cab_user_email' => $user_email,
                 'cab_user_phone' => $user_phone,
@@ -137,6 +137,7 @@ function sync_order_to_appointments($order_id) {
 // function dx_bookings_admin_scripts() {
 //     wp_enqueue_media(); // Enqueue WordPress media uploader scripts
 
+//     ?>
 //     <script type="text/javascript">
 //         jQuery(document).ready(function($){
 //             $('#upload_document_button').click(function(e) {

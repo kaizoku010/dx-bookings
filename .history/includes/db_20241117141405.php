@@ -47,4 +47,35 @@ function cab_run_upgrade_routine() {
     cab_create_appointments_table();
 }
 
+function dx_bookings_add_extra_fields() {
+    global $wpdb;
+    $table_name = $wpdb->base_prefix . 'cab_appointments';
+
+    // Add 'cab_user_name' if it doesn't exist
+    if (!$wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_user_name'")) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_user_name VARCHAR(100) DEFAULT NULL");
+    }
+
+    // Add 'cab_user_email' if it doesn't exist
+    if (!$wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_user_email'")) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_user_email VARCHAR(100) DEFAULT NULL");
+    }
+
+    // Add 'cab_user_phone' if it doesn't exist
+    if (!$wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_user_phone'")) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_user_phone VARCHAR(20) DEFAULT NULL");
+    }
+
+    // Add 'cab_price' if it doesn't exist
+    if (!$wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_price'")) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_price DECIMAL(10,2) DEFAULT 0.00");
+    }
+
+    // Add 'cab_notes' if it doesn't exist
+    if (!$wpdb->get_results("SHOW COLUMNS FROM $table_name LIKE 'cab_notes'")) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN cab_notes TEXT DEFAULT NULL");
+    }
+}
+add_action('plugins_loaded', 'dx_bookings_add_extra_fields');
+
 ?>
